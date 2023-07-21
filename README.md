@@ -49,25 +49,25 @@ ros2 run self_driving_car_pkg computer_vision_node
 ## TypeError: Descriptors cannot not be created directly.
 pip install protobuf==3.20.0
 
-######################################## Checking gazebo pluggins/world
+######################################## Checking gazebo pluggins/world ####################################
 cd /opt/ros/humble/share/gazebo_plugins/worlds
-####################################### Kill gazebo service
+####################################### Kill gazebo service ############################################
 killall gzserver
 killall -9 gazebo & killall -9 gzserver  & killall -9 gzclient
 
-####################################### open gazebo simulation for the wheelchair
+####################################### open gazebo simulation for the wheelchair #######################################
 gazebo --verbose /home/carlos/Development/ROS2-Self-Driving-Car-AI-using-OpenCV-main/self_driving_car_pkg/worlds/wheelchair_self_driving.world
 
-####################################### Run the node for controlling the wheelchair
+####################################### Run the node for controlling the wheelchair #####################################
 ros2 run self_driving_car_pkg driver_node
 
-####################################### set up bashrc
+####################################### set up bashrc ###############################################
 gedit ~/.bashrc
 
-###################################### check the list of topics activated
+###################################### check the list of topics activated ###########################
 ros2 topic list
 
-##################################### controlling using keyboard
+##################################### controlling using keyboard ####################################
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
 ##################################### installing teleop
