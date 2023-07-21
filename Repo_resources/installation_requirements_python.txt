@@ -1,0 +1,8 @@
+tensorflow==2.8.0
+scikit-learn
+# Visualization libraries
+matplotlib
+visualkeras
+# [Reqs. for Sat-Nav]
+opencv-contrib-python==4.8.0.74
+pygame

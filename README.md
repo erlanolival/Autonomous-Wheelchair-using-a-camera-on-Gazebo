@@ -1,88 +1,129 @@
-# Autonomous-Wheelchair-using-a-camera-on-Gazebo
-This is a project of an autonomous wheelchair using a camera to recognize the objects in the environment. The project is still in the beginning. I am planning to use ultrasound sensor and Lidar sensor to help to detect the obstacles in the environment and avoid collisions. I will be updating the code as soon as possible.
-
-For checking the basic concept of the simulation, check the video below:
-https://www.youtube.com/watch?v=rLPhmFiDeuU
+# ROS2 Prius Self Driving Car  using AI/Deeplearning and Computer Vision
 
 
-#How to Run the Project
-############################################# VIRTUAL ENVIRONMENT CREATION ##############################################################
-# Install virtualenv package using pip
-python3 -m pip install --user virtualenv
-# Create a virutal Environment
-python3 -m virtualenv ROS2SDC_VENV
-# Activate Virtaul Environment
-source ROS2SDC_VENV/bin/activate
-# Install neccesary python modules
-pip3 install -r Repo_resources/installation_requirements_python.txt
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#About-this-Repository">About This Repository</a></li>
+    <li><a href="#Using-this-Repository">Using this Repository</a></li>
+    <li><a href="#Course-Workflow">Course Workflow</a></li>
+    <li><a href="#Features">Features</a></li>
+    <li><a href="#Pre-Course-Requirments">Pre-Course Requirments</a></li>
+    <li><a href="#Repository-Tree">Repository Tree</a></li>
+    <li><a href="#Link-to-the-Course">Link to the Course</a></li>
+    <li><a href="#Instructors">Instructors</a></li>
+    <li><a href="#License">License</a></li>
+  </ol>
+</details>
 
-############################ Installing Dependencies 
+## About this Repository
+A tesla Like Car in ROS2 will follow lane , Use AI to classify Sign Boards and perform Object tracking to act on the sign boards and set speed respectively
 
-mkdir -p ~/.gazebo/models
-sudo apt install -y python3-colcon-common-extensions
-sudo apt install -y ros-foxy-gazebo-ros-pkgs
+[![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/thumbnail_1.png)](https://youtu.be/D5BkqDcfw2U "Click to Watch Intro Video on Youtube")
+----
+## Using this Repository
+----
+**Docker**:
 
-############################################# BUILDING THE PROJECT
+ [![alt text](https://github.com/HaiderAbasi/ROS2-Path-Planning-and-Maze-Solving/blob/master/images/linux.png)](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/docker/running_on_linux.md "Follow the guide to setup docker on Linux")&nbsp;&nbsp;
+ [![alt text](https://github.com/HaiderAbasi/ROS2-Path-Planning-and-Maze-Solving/blob/master/images/windows.png)](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/docker/running_on_windows.md "Follow the guide to setup docker on Windows 10")&nbsp;&nbsp;
 
-# Bring all models into your .gazebo/models
-cp -r self_driving_car_pkg/models/* ~/.gazebo/models
-# Notify Colcon to ignore ROS2SDC_VENV while build
-touch ROS2SDC_VENV/COLCON_IGNORE
-#Build repo
-colcon build
 
-############################################# RUNNING THE PROJECT
+**Ubuntu-20.04**: 
+- Follow along the [Wiki](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/wiki/Ubuntu-20.04-Setup-Guide) guide to setup the project.
+----
+## Course Workflow
+#### **Ros Package**
+* World Models Creation
+* Prius OSRF gazebo Model Editing
+* Nodes , Launch Files
+* SDF through Gazebo
+* Textures and Plugins in SDF
 
->>>>>>> Open A new Terminal <<<<<<<<
+#### **Computer Vision**
+* Perception Pipeline setup
+* Lane Detection with Computer Vision Techniques
+* Traffic Light Detection Using Haar Cascades
+* Sign and Traffic Light Tracking using Optical Flow
+* Rule-Based Control Algorithms
 
-#Activate Environment
-source ROS2SDC_VENV/bin/activate
-# Source *your Workspace* in any terminal you open to Run files from this workspace
-source /home/carlos/Development/ROS2-Self-Driving-Car-AI-using-OpenCV-main/install/setup.bash
-source /opt/ros/humble/setup.bash
+#### **DeepLearning**
+* Sign Classification using (custom-built) CNN
+---
+## Features
+* **Prius Hybrid Car**
+  -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/the_car.gif)
 
-## once build you can run the simulation e.g [ ros2 launch (package_name) world(launch file) ] 
-ros2 launch self_driving_car_pkg world_gazebo.launch.py
+* **Satellite Navigation (NEW!)**
+    * **Stage 1: Localiation**
 
-## To activate the SelfDriving Car
-ros2 run self_driving_car_pkg computer_vision_node
+      -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/Sat_Nav/1_localization.gif)
 
-############################################# PROBLEMS & SOLUTION  ########################################3
-## TypeError: Descriptors cannot not be created directly.
-pip install protobuf==3.20.0
+    * **Stage 2: Mapping**
 
-######################################## Checking gazebo pluggins/world
-cd /opt/ros/humble/share/gazebo_plugins/worlds
-####################################### Kill gazebo service
-killall gzserver
-killall -9 gazebo & killall -9 gzserver  & killall -9 gzclient
+      -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/Sat_Nav/2_mapping.gif)
 
-####################################### open gazebo simulation for the wheelchair
-gazebo --verbose /home/carlos/Development/ROS2-Self-Driving-Car-AI-using-OpenCV-main/self_driving_car_pkg/worlds/wheelchair_self_driving.world
+    * **Stage 3: Path-Planning**
 
-####################################### Run the node for controlling the wheelchair
-ros2 run self_driving_car_pkg driver_node
+      -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/Sat_Nav/3_pathplanning.gif)
 
-####################################### set up bashrc
-gedit ~/.bashrc
+    * **Stage 4: Motion-Planning**
 
-###################################### check the list of topics activated
-ros2 topic list
+      -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/Sat_Nav/4_motionplanning.gif)
+  
+* **Lane Following**
+  -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/lane_detection.gif)
+* **Sign Board Detection**
+  - ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/traffic_signs_boards.gif)
+* **Traffic Signal Recognition**
+  - ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/traffic_signal.gif)
 
-##################################### controlling using keyboard
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+* **T-Junction Navigation**
+  - ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/j_turning.gif)
 
-##################################### installing teleop
-sudo apt-get install ros-humble-teleop-twist-keyboard
-sudo apt-get install ros-humble-teleop-twist-keyboard
+* **The World**
+  -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/world.gif)
 
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/model/vehicle_blue/cmd_vel
+* **Custom Models**
+  -  ![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/custom_models.gif)
 
-##################################### check camera image
-ros2 run rqt_image_view rqt_image_view
+----
+## Pre-Course Requirments
 
-#################################### check image size
-ros2 topic bw /camera/image_raw
+**Software Based**
+* Ubuntu 20.04 (LTS)
+* ROS2 - Foxy Fitzroy
+* Python 3.6
+* Opencv 4.2
+* Tensorflow 2.14
 
-################################### record simulation on gazebo
-ros2 run self_driving_car_pkg video_recording_node
+**Skill Based**
+* Basic ROS2 Nodes Communication
+* Launch Files
+* Gazebo Model Creation
+* Basic OpenCV Usage
+* Motivated mind :)
+---
+
+## Repository Tree
+> Explaining repository structure (i.e important files and their functions).
+
+![alt text](https://github.com/noshluk2/ROS2-Self-Driving-Car-AI-using-OpenCV/blob/main/Images_videos/ROS2_SDC_Tree.png)
+
+----
+
+## Link to the Course
+
+**[[Discounted Link]](https://www.udemy.com/course/ros2-self-driving-car-with-deep-learning-and-computer-vision/?couponCode=MAY_LEARN)**
+
+----
+
+## Instructors
+
+Haider Najeeb   (Computer Vision)    -  [Profile Link](https://www.linkedin.com/in/haider-najeeb-68812516a/)
+Muhammad Luqman (ROS Simulation and Control Systems) - [Profile Link](https://www.linkedin.com/in/muhammad-luqman-9b227a11b/)
+
+----
+## License
+
+Distributed under the GNU-GPL License. See `LICENSE` for more information.
